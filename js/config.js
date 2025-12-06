@@ -1,5 +1,5 @@
 function load_config(e){
-    console.log(e)
+    window.localStorage.clear();
     file = e.target.files[0];
     window.localStorage.removeItem('actualCourse');
     window.localStorage.removeItem('leidos');
@@ -7,9 +7,8 @@ function load_config(e){
     console.log(window.localStorage.getItem('Paco'))
     fileReader = new FileReader()
     fileReader.onload = function(){
-        let parseJSON = JSON.parse(fileReader.result)
         window.localStorage['rawData'] = fileReader.result
-        window.location = '../index.html'
+        window.location = window.location.href.replace('/config.html', '')
     }
     fileReader.readAsText(file)
     e.preventDefault();
