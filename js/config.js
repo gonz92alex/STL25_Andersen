@@ -9,7 +9,7 @@ function load_config(e){
     fileReader.onload = function(){
         let parseJSON = JSON.parse(fileReader.result)
         window.localStorage['rawData'] = fileReader.result
-        window.location = '/'
+        window.location = '../index.html'
     }
     fileReader.readAsText(file)
     e.preventDefault();

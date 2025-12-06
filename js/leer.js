@@ -2,7 +2,8 @@ function onScanSuccess(decodedText, decodedResult) {
   console.log(`Code matched = ${decodedText}`, decodedResult);
   document.getElementById('result').innerText = `Code matched = ${decodedText} - ${decodedResult}`;
   if (decodedText in window.invitations){
-    document.body.style.backgroundColor = 'green'
+    document.body.style.backgroundColor = 'green';
+    document.getElementById(decodedText).classList.add('tachado')
   if (window.ultimoLeido != decodedText) {
     window.leidos.add(window.ultimoLeido);
     window.ultimoLeido = decodedText;

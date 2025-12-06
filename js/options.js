@@ -9,6 +9,7 @@ function load_course(course){
         window.invitations[element.code] = {studen: element.student_name, invitation: element.invitation_name, readed: element.code in window.leidos};
         let alumno = document.createElement('li')
         alumno.innerHTML = `${element.invitation_name} (${element.student_name})`
+        alumno.id = element.code
         if (element.code in window.leidos) alumno.classList.add('tachado');
         $students.appendChild(alumno)
     })
