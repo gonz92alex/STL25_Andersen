@@ -7,8 +7,7 @@ function load_course(course){
     window.leidos = JSON.parse(window.localStorage.getItem(`leidos_${window.course}`)) || [];
     window.invitations = {}
     window.rawData.invitations[course].forEach(element =>{
-        console.log(element)
-        window.invitations[element.code] = {student: element.student_name, invitation: element.invitation_name};
+        window.invitations[element.code] = {student: element.student_name, invitation: element.invitation_name, readed: element.code in window.leidos};
         let alumno = document.createElement('li')
         alumno.innerHTML = `${element.invitation_name} (${element.student_name})`
         alumno.id = element.code;
@@ -19,7 +18,6 @@ function load_course(course){
     $porLeer.innerText = window.leidos.length;
 }
 function changeCourse(e){
-    console.log(e);
     let course = e.target.value;
     load_course(course);
 }
@@ -28,7 +26,6 @@ function changeCourse(e){
 document.addEventListener("DOMContentLoaded", function(event) {
     window.rawData = JSON.parse(window.localStorage['rawData']);
     let course = window.localStorage.getItem('actualCourse');
-    console.log(rawData)
     let $select = document.getElementById('obra');
 
     $select.addEventListener('input', changeCourse)
@@ -45,13 +42,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function invitation_correct(code){
     window.ultimoLeido = code;
     window.leidos.push(window.ultimoLeido);
-    console.log(window.course);
-    console.log(window.localStorage.getItem(`leidos_${window.course}`))
+    window.localStorage.setItem(`leidos_${window.course}`, JSON.stringify(window.leidos));
     document.body.style.backgroundColor = 'green';
     document.getElementById(code).classList.add('tachado');
     document.getElementById('por_leer').innerText = window.leidos.length;
-    let utterance = new SpeechSynthesisUtterance(`Hola ${window.invitations[code].invitation} disfruta de la obra de ${window.invitations[code].student}`);
-    speechSynthesis.speak(utterance);
+    window.invitations[code];
+    //let utterance = new SpeechSynthesisUtterance(`Hola ${window.invitations[code].invitation} disfruta de la obra de ${window.invitations[code].student}`);
+    //speechSynthesis.speak(utterance);
 }
 
 
@@ -76,12 +73,15 @@ function onScanSuccess(decodedText, decodedResult) {
 }
 
 let config = {
-  fps: 10,
-  qrbox: {width: 150, height: 150},
-  rememberLastUsedCamera: true,
-  // Only support camera scan type.
-  supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA, Html5QrcodeScanType.SCAN_TYPE_FILE],
-  showTorchButtonIfSupported: true
+    fps: 10,
+    qrbox: {width: 150, height: 150},
+    rememberLastUsedCamera: true,
+    // Only support camera scan type.
+    supportedScanTypes: [
+        Html5QrcodeScanType.SCAN_TYPE_CAMERA, 
+        //Html5QrcodeScanType.SCAN_TYPE_FILE
+    ],
+    showTorchButtonIfSupported: true
 };
 
 window.html5QrcodeScanner = new Html5QrcodeScanner(
