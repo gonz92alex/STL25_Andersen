@@ -1,6 +1,16 @@
 function onScanSuccess(decodedText, decodedResult) {
   console.log(`Code matched = ${decodedText}`, decodedResult);
-  document.getElementById('result').innerText = `Code matched = ${decodedText} - ${decodedResult}`
+  document.getElementById('result').innerText = `Code matched = ${decodedText} - ${decodedResult}`;
+  if (decodedText in window.invitations){
+    document.body.style.backgroundColor = 'green'
+  if (window.ultimoLeido != decodedText) {
+    window.leidos.add(window.ultimoLeido);
+    window.ultimoLeido = decodedText;
+  }
+}
+else{
+  document.body.style.backgroundColor = 'red'
+}
 }
 
 let config = {
