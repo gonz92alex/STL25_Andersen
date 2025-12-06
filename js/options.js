@@ -20,6 +20,7 @@ function load_course(course){
 function changeCourse(e){
     let course = e.target.value;
     load_course(course);
+    document.body.style.backgroundColor = 'white';
 }
 
 
