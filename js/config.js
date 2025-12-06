@@ -12,7 +12,7 @@ function load_config(e){
         window.location = '/'
     }
     fileReader.readAsText(file)
-
+    e.preventDefault();
 }
 
 
